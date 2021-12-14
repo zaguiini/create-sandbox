@@ -16,14 +16,17 @@ const fetchSourceCodeInformation = async (sourceDirectory: string) => {
     path.resolve(sourceDirectory, 'package.json')
   )
 
+  const reactPackage = 'react'
+
   const reactEntry =
-    packageJson.peerDependencies?.react ??
-    packageJson.dependencies?.react ??
-    packageJson.devDependencies?.react
+    packageJson.peerDependencies?.[reactPackage] ??
+    packageJson.dependencies?.[reactPackage] ??
+    packageJson.devDependencies?.[reactPackage]
 
   return {
     packageManager: isThereYarnLock ? 'yarn' : 'npm',
     reactVersion: reactEntry ?? undefined,
+    packageName: packageJson.name,
   }
 }
 
@@ -43,9 +46,13 @@ export const createSandbox = async (
   await git().clone(repositoryUrl, sourceDirectory)
   spinner.succeed('Cloned successfully')
 
-  const { packageManager, reactVersion } = await fetchSourceCodeInformation(
-    sourceDirectory
-  )
+  const { packageManager, reactVersion, packageName } =
+    await fetchSourceCodeInformation(sourceDirectory)
+
+  if (!packageName) {
+    spinner.fail('I did not find a name inside package.json')
+    process.exit(1)
+  }
 
   if (!reactVersion) {
     spinner.fail('The cloned repository is not a React project')
