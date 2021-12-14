@@ -5,6 +5,7 @@ import fs from 'fs-extra'
 import type { PackageJson } from 'type-fest'
 
 import { hasYarn } from './hasYarn'
+import { run } from './run'
 
 const fetchSourceCodeInformation = async (sourceDirectory: string) => {
   const isThereYarnLock = await fs.pathExists(
@@ -36,6 +37,7 @@ export const createSandbox = async (
 ) => {
   const spinner = ora()
   const sourceDirectory = path.resolve(process.cwd(), directoryName)
+  const sandboxName = `${directoryName}-sandbox`
 
   spinner.start('Cloning repository...')
   await git().clone(repositoryUrl, sourceDirectory)
@@ -56,4 +58,17 @@ export const createSandbox = async (
     )
     process.exit(1)
   }
+
+  spinner.start('Creating a React sandbox...')
+
+  await run(
+    'npx',
+    [
+      'create-react-app',
+      sandboxName,
+      packageManager === 'npm' ? '--use-npm' : '',
+    ].filter(Boolean)
+  )
+
+  spinner.succeed('React sandbox created successfully')
 }
