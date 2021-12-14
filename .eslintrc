@@ -15,6 +15,7 @@
   },
   "rules": {
     "prettier/prettier": "error",
+    "unicorn/no-process-exit": "off",
     "object-shorthand": "error",
     "no-unused-vars": "off",
     "@typescript-eslint/member-delimiter-style": "off",

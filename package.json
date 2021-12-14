@@ -16,6 +16,7 @@
     "prepublish": "yarn build"
   },
   "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
     "@types/node": "^16.11.12",
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.7.0",
@@ -24,10 +25,12 @@
     "eslint-plugin-unicorn": "^39.0.0",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
+    "type-fest": "^2.8.0",
     "typescript": "^4.5.4"
   },
   "dependencies": {
     "commander": "^8.3.0",
+    "fs-extra": "^10.0.0",
     "ora": "^6.0.1",
     "simple-git": "^2.48.0"
   }
