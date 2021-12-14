@@ -4,6 +4,8 @@ import ora from 'ora'
 import fs from 'fs-extra'
 import type { PackageJson } from 'type-fest'
 
+import { hasYarn } from './hasYarn'
+
 const fetchSourceCodeInformation = async (sourceDirectory: string) => {
   const isThereYarnLock = await fs.pathExists(
     path.resolve(sourceDirectory, 'yarn.lock')
@@ -45,6 +47,13 @@ export const createSandbox = async (
 
   if (!reactVersion) {
     spinner.fail('The cloned repository is not a React project')
+    process.exit(1)
+  }
+
+  if (packageManager === 'yarn' && !(await hasYarn())) {
+    spinner.fail(
+      'The cloned project uses Yarn, but I could not find it in your system'
+    )
     process.exit(1)
   }
 }
