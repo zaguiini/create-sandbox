@@ -23,10 +23,19 @@ const fetchSourceCodeInformation = async (sourceDirectory: string) => {
     packageJson.dependencies?.[reactPackage] ??
     packageJson.devDependencies?.[reactPackage]
 
+  const peerDependencies = packageJson.peerDependencies ?? {}
+
   return {
     packageManager: isThereYarnLock ? 'yarn' : 'npm',
     reactVersion: reactEntry ?? undefined,
     packageName: packageJson.name,
+    peerDependencies: Object.keys(peerDependencies)
+      .filter((package_) => !['react', 'react-dom'].includes(package_))
+      .map((key) => {
+        const fixedVersion = peerDependencies[key].replace(/^[\^~]/, '~')
+
+        return `${key}@${fixedVersion}`
+      }),
   }
 }
 
@@ -46,7 +55,7 @@ export const createSandbox = async (
   await git().clone(repositoryUrl, sourceDirectory)
   spinner.succeed('Cloned successfully')
 
-  const { packageManager, reactVersion, packageName } =
+  const { packageManager, reactVersion, packageName, peerDependencies } =
     await fetchSourceCodeInformation(sourceDirectory)
 
   if (!packageName) {
@@ -78,4 +87,20 @@ export const createSandbox = async (
   )
 
   spinner.succeed('React sandbox created successfully')
+
+  const sandboxDirectory = path.resolve(`${directoryName}-sandbox`)
+
+  if (peerDependencies.length > 0) {
+    spinner.start('Installing peer dependencies in the sandbox...')
+
+    await run(
+      packageManager,
+      [packageManager === 'npm' ? 'install' : 'add', ...peerDependencies],
+      {
+        cwd: path.resolve(sandboxDirectory),
+      }
+    )
+
+    spinner.succeed('Peer dependencies installed')
+  }
 }
