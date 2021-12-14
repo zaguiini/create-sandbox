@@ -6,6 +6,7 @@ import type { PackageJson } from 'type-fest'
 
 import { hasYarn } from './hasYarn'
 import { run } from './run'
+import { generateSuccessMessage } from './generateSuccesMessage'
 
 const fetchSourceCodeInformation = async (sourceDirectory: string) => {
   const isThereYarnLock = await fs.pathExists(
@@ -119,4 +120,42 @@ export const createSandbox = async (
 
     spinner.succeed('Peer dependencies installed')
   }
+
+  spinner.start('Linking project dependencies to the sandbox...')
+
+  await run(packageManager, ['link'], {
+    cwd: sourceDirectory,
+  })
+
+  await run(packageManager, ['link'], {
+    cwd: path.resolve(sourceDirectory, 'node_modules', 'react'),
+  })
+
+  let linkedReactDOM = true
+
+  try {
+    await run(packageManager, ['link'], {
+      cwd: path.resolve(sourceDirectory, 'node_modules', 'react-dom'),
+    })
+  } catch {
+    // Not all projects include react-dom as a dependency
+    linkedReactDOM = false
+  }
+
+  await run(
+    packageManager,
+    ['link', packageName, 'react', linkedReactDOM ? 'react-dom' : ''].filter(
+      Boolean
+    ),
+    {
+      cwd: path.resolve(sandboxDirectory),
+    }
+  )
+
+  spinner.succeed('Dependencies linked')
+
+  generateSuccessMessage({
+    packageManager,
+    sandboxName,
+  })
 }
