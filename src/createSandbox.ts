@@ -88,6 +88,22 @@ export const createSandbox = async (
 
   spinner.succeed('React sandbox created successfully')
 
+  spinner.start('Installing project dependencies...')
+
+  await run(packageManager, ['install'], {
+    cwd: sourceDirectory,
+  })
+
+  spinner.succeed('Project dependencies installed')
+
+  spinner.start('Building project...')
+
+  await run(packageManager, ['build'], {
+    cwd: sourceDirectory,
+  })
+
+  spinner.succeed('Project built')
+
   const sandboxDirectory = path.resolve(`${directoryName}-sandbox`)
 
   if (peerDependencies.length > 0) {
