@@ -8,7 +8,7 @@ It works on single project repositories that are using React. Another requiremen
 
 When you run the `create-sandbox` command, the CLI will:
 
-1. clone the repository;
+1. clone the repository if it does not exist already;
 2. create a React sandbox;
 3. install the project dependencies;
 4. build the project;
@@ -20,9 +20,10 @@ Now all you need to do is to start the sandboxed application and let your ideas 
 ## Roadmap
 
 - [x] Simple repository with React sandbox
+- [ ] Custom build script
+- [ ] Folder as project instead of repository
 - [ ] Unlink packages NPM script
 - [ ] Monorepo with React sandbox
-- [ ] Custom build script
 - [ ] Package selection for monorepos
 - [ ] Framework detector + adapter (e.g. Vue, Angular)
 
