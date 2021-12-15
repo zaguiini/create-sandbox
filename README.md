@@ -20,6 +20,7 @@ Now all you need to do is to start the sandboxed application and let your ideas 
 ## Roadmap
 
 - [x] Simple repository with React sandbox
+- [ ] Unlink packages NPM script
 - [ ] Monorepo with React sandbox
 - [ ] Custom build script
 - [ ] Package selection for monorepos
