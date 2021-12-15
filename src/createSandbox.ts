@@ -78,14 +78,34 @@ export const createSandbox = async (
 
   spinner.start('Creating a React sandbox...')
 
-  await run(
-    'npx',
-    [
-      'create-react-app',
-      sandboxName,
-      packageManager === 'npm' ? '--use-npm' : '',
-    ].filter(Boolean)
-  )
+  try {
+    await run(
+      'npx',
+      [
+        'create-react-app',
+        sandboxName,
+        packageManager === 'npm' ? '--use-npm' : '',
+      ].filter(Boolean),
+      {
+        env: {
+          ...process.env,
+          npm_config_yes: 'true',
+        },
+      }
+    )
+  } catch {
+    spinner.fail('Failed to create React sandbox')
+
+    console.error(`
+  Try deleting npx cache by running the following command:
+    \`rm -rf $(npm config get cache)/_npx\`
+  And make sure that Create React App is not installed globally:
+    - \`npm remove create-react-app -g\`
+    - \`yarn global remove create-react-app\`
+`)
+
+    process.exit(1)
+  }
 
   spinner.succeed('React sandbox created successfully')
 
