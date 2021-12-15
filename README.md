@@ -32,6 +32,17 @@ Fork it and create PRs. They are welcome!
 
 On creating issues, please make sure to specify the URL of the repository, along with your environment settings such as OS, package manager and NodeJS version.
 
+## Making `create-sandbox`
+
+1. Clone the repository;
+2. Install the packages;
+3. Run the `build` script.
+
+To test, run the following script on the parent folder:
+
+```sh
+node --experimental-specifier-resolution=node create-sandbox/dist/index.js <repository-url>
+```
 ## LICENSE
 
 MIT
