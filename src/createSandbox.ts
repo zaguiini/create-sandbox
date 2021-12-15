@@ -52,9 +52,13 @@ export const createSandbox = async (
   const sourceDirectory = path.resolve(process.cwd(), directoryName)
   const sandboxName = `${directoryName}-sandbox`
 
-  spinner.start('Cloning repository...')
-  await git().clone(repositoryUrl, sourceDirectory)
-  spinner.succeed('Cloned successfully')
+  if (await fs.pathExists(sourceDirectory)) {
+    spinner.succeed('Repository already exists')
+  } else {
+    spinner.start('Cloning repository...')
+    await git().clone(repositoryUrl, sourceDirectory)
+    spinner.succeed('Cloned successfully')
+  }
 
   const { packageManager, reactVersion, packageName, peerDependencies } =
     await fetchSourceCodeInformation(sourceDirectory)
