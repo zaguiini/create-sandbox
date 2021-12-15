@@ -1,6 +1,6 @@
 {
   "name": "create-sandbox",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/index.js",
   "repository": "git@github.com:zaguiini/create-sandbox.git",
   "author": "Luis Felipe Zaguini <luisfelipezaguini@gmail.com>",
