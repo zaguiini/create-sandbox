@@ -36,9 +36,11 @@ On creating issues, please make sure to specify the URL of the repository, along
 
 1. Clone the repository;
 2. Install the packages;
-3. Run the `build` script.
+3. Run the `start` script.
 
-To test, run the following script on the parent folder:
+It will start the compiler in watch mode.
+
+To test you changes, run the following script on the parent folder:
 
 ```sh
 node --experimental-specifier-resolution=node create-sandbox/dist/index.js <repository-url>

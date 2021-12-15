@@ -11,6 +11,7 @@
     "create-sandbox": "dist/index.js"
   },
   "scripts": {
+    "start": "tsc --watch",
     "prebuild": "rimraf dist",
     "build": "tsc",
     "prepublish": "yarn build"
