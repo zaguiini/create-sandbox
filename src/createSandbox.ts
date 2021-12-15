@@ -50,9 +50,18 @@ export const createSandbox = async (
 ) => {
   const spinner = ora()
   const sourceDirectory = path.resolve(process.cwd(), directoryName)
-  const sandboxName = `${directoryName}-sandbox`
 
-  if (await fs.pathExists(sourceDirectory)) {
+  const sandboxName = `${directoryName}-sandbox`
+  const sandboxDirectory = path.resolve(process.cwd(), sandboxName)
+
+  if (await fs.pathExists(sandboxDirectory)) {
+    spinner.fail('Sandbox project already exists')
+    console.error(`
+  Please remove the ${sandboxName} directory:
+    \`rm -rf ${sandboxName}\`
+`)
+    process.exit(1)
+  } else if (await fs.pathExists(sourceDirectory)) {
     spinner.succeed('Repository already exists')
   } else {
     spinner.start('Cloning repository...')
@@ -129,8 +138,6 @@ export const createSandbox = async (
 
   spinner.succeed('Project built')
 
-  const sandboxDirectory = path.resolve(`${directoryName}-sandbox`)
-
   if (peerDependencies.length > 0) {
     spinner.start('Installing peer dependencies in the sandbox...')
 
@@ -138,7 +145,7 @@ export const createSandbox = async (
       packageManager,
       [packageManager === 'npm' ? 'install' : 'add', ...peerDependencies],
       {
-        cwd: path.resolve(sandboxDirectory),
+        cwd: sandboxDirectory,
       }
     )
 
@@ -172,7 +179,7 @@ export const createSandbox = async (
       Boolean
     ),
     {
-      cwd: path.resolve(sandboxDirectory),
+      cwd: sandboxDirectory,
     }
   )
 
