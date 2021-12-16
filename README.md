@@ -11,28 +11,18 @@ When you run the `create-sandbox` command, the CLI will:
 1. clone the source if it is a repository and does not exist locally;
 2. create a React sandbox;
 3. install the project dependencies;
-4. build the project;
-5. install the project's peer dependencies in the sandbox;
-6. link the project's artifacts to the sandbox.
+4. install the project's peer dependencies in the sandbox;
+5. link the project to the sandbox.
 
-Now all you need to do is to start the sandboxed application and let your ideas change the world!
+Now all you need to do is to start the sandboxed application, fire the development version of your project and let your ideas change the world!
 
 ### Using a local folder
 
 It's possible to use an already existing folder instead of cloning a Github repo. Just pass the folder name as the argument and you should be good to go!
 
-### Using a custom build script
-
-You can by passing the `-b` option to specify a custom `build` script. Example:
-
-```sh
-npx create-sandbox git@github.com:username/repo -b build:prod
-```
-
 ## TODO
 
 - [x] Simple repository with React sandbox
-- [x] Custom build script
 - [x] Folder as project instead of repository
 - [ ] Monorepo with React sandbox
 - [ ] Package selection for monorepos

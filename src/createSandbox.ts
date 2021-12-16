@@ -44,14 +44,9 @@ const getFallbackDirectoryName = (source: string) => {
   return path.parse(source).name
 }
 
-interface Options {
-  buildScript: string
-}
-
 export const createSandbox = async (
   source: string,
-  directoryName = getFallbackDirectoryName(source),
-  { buildScript }: Options
+  directoryName = getFallbackDirectoryName(source)
 ) => {
   const spinner = ora()
   const sourceDirectory = path.resolve(process.cwd(), directoryName)
@@ -141,18 +136,6 @@ export const createSandbox = async (
   })
 
   spinner.succeed('Project dependencies installed')
-
-  spinner.start('Building project...')
-
-  await run(
-    packageManager,
-    [packageManager === 'npm' ? 'run' : '', buildScript].filter(Boolean),
-    {
-      cwd: sourceDirectory,
-    }
-  )
-
-  spinner.succeed('Project built')
 
   if (peerDependencies.length > 0) {
     spinner.start('Installing peer dependencies in the sandbox...')

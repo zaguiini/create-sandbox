@@ -12,4 +12,6 @@ export const generateSuccessMessage = ({
 
   Now enter the \`${sandboxName}\` directory,
   run \`${packageManager} start\` and enjoy your development sandbox!
+
+  Don't forget to fire the development server in your project!
 `)
