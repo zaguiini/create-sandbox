@@ -29,7 +29,7 @@ You can by passing the `-b` option to specify a custom `build` script. Example:
 npx create-sandbox git@github.com:username/repo -b build:prod
 ```
 
-## Roadmap
+## TODO
 
 - [x] Simple repository with React sandbox
 - [x] Custom build script
