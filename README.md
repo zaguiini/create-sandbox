@@ -52,7 +52,7 @@ On creating issues, please make sure to specify the URL of the repository, along
 
 It will start the compiler in watch mode.
 
-To test you changes, run the following script on the parent folder:
+To test your changes, run the following script on the parent folder:
 
 ```sh
 node --experimental-specifier-resolution=node create-sandbox/dist/index.js <source>
