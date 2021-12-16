@@ -7,6 +7,7 @@ const program = new Command()
 program
   .argument('<repository>', 'the repository URL')
   .argument('[directory]', 'The name of a new directory to clone into.')
+  .option('-b, --build-script <script>', 'The build script name', 'build')
   .action(createSandbox)
 
 program.parse()
