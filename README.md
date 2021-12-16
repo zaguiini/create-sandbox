@@ -17,10 +17,18 @@ When you run the `create-sandbox` command, the CLI will:
 
 Now all you need to do is to start the sandboxed application and let your ideas change the world!
 
+### Using a custom build script
+
+You can passing the `-b` option to specify a custom `build` script. Example:
+
+```sh
+npx create-sandbox git@github.com:username/repo -b build:prod
+```
+
 ## Roadmap
 
 - [x] Simple repository with React sandbox
-- [ ] Custom build script
+- [x] Custom build script
 - [ ] Folder as project instead of repository
 - [ ] Unlink packages NPM script
 - [ ] Monorepo with React sandbox

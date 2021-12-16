@@ -44,9 +44,14 @@ const getFallbackDirectoryName = (repositoryUrl: string) => {
   return path.parse(repositoryUrl).name
 }
 
+interface Options {
+  buildScript: string
+}
+
 export const createSandbox = async (
   repositoryUrl: string,
-  directoryName = getFallbackDirectoryName(repositoryUrl)
+  directoryName = getFallbackDirectoryName(repositoryUrl),
+  { buildScript }: Options
 ) => {
   const spinner = ora()
   const sourceDirectory = path.resolve(process.cwd(), directoryName)
@@ -132,9 +137,13 @@ export const createSandbox = async (
 
   spinner.start('Building project...')
 
-  await run(packageManager, ['build'], {
-    cwd: sourceDirectory,
-  })
+  await run(
+    packageManager,
+    [packageManager === 'npm' ? 'run' : '', buildScript].filter(Boolean),
+    {
+      cwd: sourceDirectory,
+    }
+  )
 
   spinner.succeed('Project built')
 
