@@ -40,8 +40,8 @@ const fetchSourceCodeInformation = async (sourceDirectory: string) => {
   }
 }
 
-const getFallbackDirectoryName = (repositoryUrl: string) => {
-  return path.parse(repositoryUrl).name
+const getFallbackDirectoryName = (source: string) => {
+  return path.parse(source).name
 }
 
 interface Options {
@@ -49,8 +49,8 @@ interface Options {
 }
 
 export const createSandbox = async (
-  repositoryUrl: string,
-  directoryName = getFallbackDirectoryName(repositoryUrl),
+  source: string,
+  directoryName = getFallbackDirectoryName(source),
   { buildScript }: Options
 ) => {
   const spinner = ora()
@@ -67,11 +67,18 @@ export const createSandbox = async (
 `)
     process.exit(1)
   } else if (await fs.pathExists(sourceDirectory)) {
-    spinner.succeed('Repository already exists')
+    spinner.succeed('Source folder found')
   } else {
     spinner.start('Cloning repository...')
-    await git().clone(repositoryUrl, sourceDirectory)
-    spinner.succeed('Cloned successfully')
+
+    try {
+      await git().clone(source, sourceDirectory)
+      spinner.succeed('Cloned successfully')
+    } catch (error) {
+      spinner.fail('Error cloning repository')
+      console.error(error.message)
+      process.exit(1)
+    }
   }
 
   const { packageManager, reactVersion, packageName, peerDependencies } =

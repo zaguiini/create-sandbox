@@ -17,6 +17,10 @@ When you run the `create-sandbox` command, the CLI will:
 
 Now all you need to do is to start the sandboxed application and let your ideas change the world!
 
+### Using a local folder
+
+It's possible to use an already existing folder instead of cloning a Github repo. Just pass the folder name as the argument and you should be good to go!
+
 ### Using a custom build script
 
 You can passing the `-b` option to specify a custom `build` script. Example:
@@ -29,7 +33,7 @@ npx create-sandbox git@github.com:username/repo -b build:prod
 
 - [x] Simple repository with React sandbox
 - [x] Custom build script
-- [ ] Folder as project instead of repository
+- [x] Folder as project instead of repository
 - [ ] Unlink packages NPM script
 - [ ] Monorepo with React sandbox
 - [ ] Package selection for monorepos
