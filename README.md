@@ -2,13 +2,13 @@
 
 Create a local sandbox of a library you'd like to contribute!
 
-Run it with `npx create-sandbox <repository-url>`
+Run it with `npx create-sandbox <source>`
 
 It works on single project repositories that are using React.
 
 When you run the `create-sandbox` command, the CLI will:
 
-1. clone the repository if it does not exist already;
+1. clone the source if it is a repository and does not exist locally;
 2. create a React sandbox;
 3. install the project dependencies;
 4. build the project;
@@ -16,6 +16,10 @@ When you run the `create-sandbox` command, the CLI will:
 6. link the project's artifacts to the sandbox.
 
 Now all you need to do is to start the sandboxed application and let your ideas change the world!
+
+### Using a local folder
+
+It's possible to use an already existing folder instead of cloning a Github repo. Just pass the folder name as the argument and you should be good to go!
 
 ### Using a custom build script
 
@@ -29,7 +33,7 @@ npx create-sandbox git@github.com:username/repo -b build:prod
 
 - [x] Simple repository with React sandbox
 - [x] Custom build script
-- [ ] Folder as project instead of repository
+- [x] Folder as project instead of repository
 - [ ] Unlink packages NPM script
 - [ ] Monorepo with React sandbox
 - [ ] Package selection for monorepos
@@ -52,7 +56,7 @@ It will start the compiler in watch mode.
 To test you changes, run the following script on the parent folder:
 
 ```sh
-node --experimental-specifier-resolution=node create-sandbox/dist/index.js <repository-url>
+node --experimental-specifier-resolution=node create-sandbox/dist/index.js <source>
 ```
 ## LICENSE
 
