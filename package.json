@@ -10,6 +10,9 @@
   "bin": {
     "create-sandbox": "dist/index.js"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "tsc --watch",
     "prebuild": "rimraf dist",
