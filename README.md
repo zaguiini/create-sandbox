@@ -34,7 +34,6 @@ npx create-sandbox git@github.com:username/repo -b build:prod
 - [x] Simple repository with React sandbox
 - [x] Custom build script
 - [x] Folder as project instead of repository
-- [ ] Unlink packages NPM script
 - [ ] Monorepo with React sandbox
 - [ ] Package selection for monorepos
 - [ ] Framework detector + adapter (e.g. Vue, Angular)
